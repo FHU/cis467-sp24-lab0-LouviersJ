@@ -18,25 +18,38 @@ app.get("/", (req, res) => {
 })
 
 // http://localhost:3000/greet?name=kaylee&dob=2002
-app.get('/greet', (req, res)=> {
-    console.log(req.query)
+app.get('/greet', (req,res)=>{
+    let year = new Date().getFullYear()
+    const age = year - parseInt(req.query.year)
+    res.send(`<h2> Hello ${req.query.name} \nYou are ${age-1} or ${age} years old <h2>`)
+});
 
-    res.send(`hey, ${req.query.name}`)
-})
+app.get('/math/:number/:symbol/:number_', (req, res)=> {
+    const number = parseInt(req.params.number)
+    const number_ = parseInt(req.params.number_)
+    const symbol = req.params.symbol.toLowerCase();
 
-app.get('/math/:num1/:op/:num2', (req, res)=> {
-    console.log( req.params )
-    res.send(`${req.params.num1}`)
-})
+    switch(symbol){
+        case "plus":
+            res.send(`<h1> ${number+number_} </h1>`);break
+        case "minus":
+            res.send(`<h1> ${number-number_} </h1>`);break
+        case "times":
+            res.send(`<h1> ${number*number_} </h1>`);break
+        case "divideby":
+            res.send(`<h1> ${number/number_} </h1>`);break
+        case "tothepowerof":
+            res.send(`<h1> ${number**number_} </h1>`);break
+        default:
+            res.status(400).send('<h1> This operation is not valid</h1>')
+    }
+});
 
-app.get('/pandorasbox', (req, res)=> {
-
-    // do the work
-    //const message = "DAD JOKE"
-    const length = facts.length;
-    const random =  Math.floor( Math.random() * length)
-    const fact4 = facts[random].fact
-
-    res.render('pandorasbox', {title: "Pandora's Box", message:fact4} )
-
-})
+app.get('/views/pandorasbox', (req,res)=>{
+    
+    const length = facts.length
+    const random = Math.floor(math.random()*length)
+    const fact4 = facts[4].fact4
+    
+    res.render('pandorasbox', {title: "Pandora's box", message: fact4})
+});
