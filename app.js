@@ -45,11 +45,11 @@ app.get('/math/:number/:symbol/:number_', (req, res)=> {
     }
 });
 
-app.get('/views/pandorasbox', (req,res)=>{
+app.get('/pandorasbox', (req,res)=>{
     
     const length = facts.length
-    const random = Math.floor(math.random()*length)
-    const fact4 = facts[4].fact4
+    const random = Math.floor(Math.random()*length)
+    const fact = facts[random].fact
+    res.render('pandorasbox', {title: "Pandora's box", message: fact})
     
-    res.render('pandorasbox', {title: "Pandora's box", message: fact4})
 });
